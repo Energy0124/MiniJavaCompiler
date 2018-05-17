@@ -8,6 +8,10 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 move $fp, $sp
 addiu $sp, $sp, -8
 
+li $a0, 10
+jal _alloc_int_array
+move $a0, $v0
+sw $a0, 8($fp)
 li $a0, 0
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
@@ -178,6 +182,11 @@ addiu $sp, $sp, 4	  # pop
 lw $a0, 0($a0)
 jal _print_int        # system call code for print_int 
 
+lw $a0, 8($fp)
+beq $a0, $0, _null_pointer_exception
+lw $a0, 0($a0)
+jal _print_int        # system call code for print_int 
+
 li $a0, 10
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
@@ -192,10 +201,6 @@ lw $t1, 4($sp)	  # $t1 = stack top
 bge $t1, $t2, _array_index_out_of_bound_exception
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
-lw $a0, 0($a0)
-jal _print_int        # system call code for print_int 
-
-lw $a0, 8($fp)
 lw $a0, 0($a0)
 jal _print_int        # system call code for print_int 
 

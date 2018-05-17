@@ -190,10 +190,20 @@ public class CodeGenVisitor extends DepthFirstVisitor {
         } else if (null != (var = currClass.getVar(n.i.s))) {
             out.println("lw $a0, " + var.offset * 4 + "($fp)");
         }
+        out.println("beq $a0, $0, _null_pointer_exception");
+
+        //get array size * 4  for  bound check
+        out.println("lw $t2, 0($a0)");
+        out.println("sll $t2, $t2, 2");
 
         out.println("addiu $a0, $a0, 4");
 //        out.println("add $a0, $a0, $s0");
-        out.println("lw $t1, 4($sp)\t  # $t1 = stack top\n" +
+        out.println("lw $t1, 4($sp)\t  # $t1 = stack top\n");
+
+        //check out of bound
+        out.println("bge $t1, $t2, _array_index_out_of_bound_exception");
+
+        out.println(
                 "add $a0, $t1, $a0\t  # $a0 = $a0 + stack top\n" +
                 "addiu $sp, $sp, 4\t  # pop"
         );
@@ -321,6 +331,8 @@ public class CodeGenVisitor extends DepthFirstVisitor {
     // cgen: e.length
     public void visit(ArrayLength n) {
         n.e.accept(this);
+        out.println("beq $a0, $0, _null_pointer_exception");
+
         out.println("lw $a0, 0($a0)");
     }
 

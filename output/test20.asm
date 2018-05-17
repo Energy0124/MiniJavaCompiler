@@ -43,8 +43,13 @@ addiu $sp, $sp, -4
 #end ArrayAssign e1
 #start ArrayAssign i
 lw $a0, 8($fp)
+beq $a0, $0, _null_pointer_exception
+lw $t2, 0($a0)
+sll $t2, $t2, 2
 addiu $a0, $a0, 4
 lw $t1, 4($sp)	  # $t1 = stack top
+
+bge $t1, $t2, _array_index_out_of_bound_exception
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 sw $a0, 0($sp)	  # push value of e1 to stack
@@ -78,8 +83,13 @@ addiu $sp, $sp, -4
 #end ArrayAssign e1
 #start ArrayAssign i
 lw $a0, 8($fp)
+beq $a0, $0, _null_pointer_exception
+lw $t2, 0($a0)
+sll $t2, $t2, 2
 addiu $a0, $a0, 4
 lw $t1, 4($sp)	  # $t1 = stack top
+
+bge $t1, $t2, _array_index_out_of_bound_exception
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 sw $a0, 0($sp)	  # push value of e1 to stack
@@ -91,8 +101,13 @@ sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 lw $a0, 8($fp)
+beq $a0, $0, _null_pointer_exception
+lw $t2, 0($a0)
+sll $t2, $t2, 2
 addiu $a0, $a0, 4
 lw $t1, 4($sp)	  # $t1 = stack top
+
+bge $t1, $t2, _array_index_out_of_bound_exception
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 lw $a0, 0($a0)
@@ -100,8 +115,13 @@ sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 lw $a0, 8($fp)
+beq $a0, $0, _null_pointer_exception
+lw $t2, 0($a0)
+sll $t2, $t2, 2
 addiu $a0, $a0, 4
 lw $t1, 4($sp)	  # $t1 = stack top
+
+bge $t1, $t2, _array_index_out_of_bound_exception
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 lw $a0, 0($a0)
@@ -109,8 +129,13 @@ sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 lw $a0, 8($fp)
+beq $a0, $0, _null_pointer_exception
+lw $t2, 0($a0)
+sll $t2, $t2, 2
 addiu $a0, $a0, 4
 lw $t1, 4($sp)	  # $t1 = stack top
+
+bge $t1, $t2, _array_index_out_of_bound_exception
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 lw $a0, 0($a0)
@@ -128,8 +153,13 @@ addiu $sp, $sp, -4
 #end ArrayAssign e1
 #start ArrayAssign i
 lw $a0, 8($fp)
+beq $a0, $0, _null_pointer_exception
+lw $t2, 0($a0)
+sll $t2, $t2, 2
 addiu $a0, $a0, 4
 lw $t1, 4($sp)	  # $t1 = stack top
+
+bge $t1, $t2, _array_index_out_of_bound_exception
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 sw $a0, 0($sp)	  # push value of e1 to stack
@@ -157,8 +187,13 @@ sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 lw $a0, 8($fp)
+beq $a0, $0, _null_pointer_exception
+lw $t2, 0($a0)
+sll $t2, $t2, 2
 addiu $a0, $a0, 4
 lw $t1, 4($sp)	  # $t1 = stack top
+
+bge $t1, $t2, _array_index_out_of_bound_exception
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 lw $a0, 0($a0)
@@ -169,8 +204,13 @@ sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 lw $a0, 8($fp)
+beq $a0, $0, _null_pointer_exception
+lw $t2, 0($a0)
+sll $t2, $t2, 2
 addiu $a0, $a0, 4
 lw $t1, 4($sp)	  # $t1 = stack top
+
+bge $t1, $t2, _array_index_out_of_bound_exception
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 lw $a0, 0($a0)
@@ -198,6 +238,7 @@ lw $a0, 12($fp)
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 lw $a0, 8($fp)
+beq $a0, $0, _null_pointer_exception
 lw $a0, 0($a0)
 lw $t1, 4($sp)	  # $t1 = stack top
 slt $a0, $t1, $a0	  # $a0 = $a0 + stack top
@@ -210,8 +251,13 @@ sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 lw $a0, 8($fp)
+beq $a0, $0, _null_pointer_exception
+lw $t2, 0($a0)
+sll $t2, $t2, 2
 addiu $a0, $a0, 4
 lw $t1, 4($sp)	  # $t1 = stack top
+
+bge $t1, $t2, _array_index_out_of_bound_exception
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 lw $a0, 0($a0)
