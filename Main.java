@@ -1,44 +1,46 @@
-import syntaxtree.*;
-import visitor.*;
-import myparser.*;
+import myparser.MiniJavaParser;
+import myparser.ParseException;
+import syntaxtree.Program;
+import visitor.BuildSymbolTableVisitor;
+import visitor.CodeGenVisitor;
+import visitor.TypeCheckVisitor;
+
 import java.io.*;
 
 public class Main {
-   public static void main(String [] args) {
-      if(args.length >= 1) {
-          try {
-              System.setIn(new FileInputStream(args[0]));
-          } catch (FileNotFoundException e) {
-              e.printStackTrace();
-          }
-      }
-      try {
-         Program root = new MiniJavaParser(System.in).Goal();
+    public static void main(String[] args) {
+        if (args.length >= 1) {
+            try {
+                System.setIn(new FileInputStream(args[0]));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            Program root = new MiniJavaParser(System.in).Goal();
 
-	 // Build the symbol table
-	 BuildSymbolTableVisitor buildSymTab = new BuildSymbolTableVisitor();
-         root.accept(buildSymTab);
+            // Build the symbol table
+            BuildSymbolTableVisitor buildSymTab = new BuildSymbolTableVisitor();
+            root.accept(buildSymTab);
 
-	 // Type check
-	 TypeCheckVisitor typeCheck =
-             new TypeCheckVisitor(buildSymTab.getSymTab());
-         root.accept(typeCheck);
+            // Type check
+            TypeCheckVisitor typeCheck =
+                    new TypeCheckVisitor(buildSymTab.getSymTab());
+            root.accept(typeCheck);
 
-         PrintWriter out = new PrintWriter(System.out);
-         if (args.length >= 2)
-           out = new PrintWriter(new BufferedWriter(new FileWriter(args[1])));
+            PrintWriter out = new PrintWriter(System.out);
+            if (args.length >= 2)
+                out = new PrintWriter(new BufferedWriter(new FileWriter(args[1])));
 
-         CodeGenVisitor cgen = new CodeGenVisitor(buildSymTab.getSymTab(), out);
+            CodeGenVisitor cgen = new CodeGenVisitor(buildSymTab.getSymTab(), out);
 
-         root.accept(cgen);
+            root.accept(cgen);
 
-         out.close();
-      }
-      catch (ParseException e) {
-         System.out.println(e.toString());
-      }
-      catch (IOException e) {
-         System.out.println(e.toString());
-      }
-   }
+            out.close();
+        } catch (ParseException e) {
+            System.out.println(e.toString());
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
+    }
 }

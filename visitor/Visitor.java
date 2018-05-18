@@ -3,38 +3,71 @@ package visitor;
 import syntaxtree.*;
 
 public interface Visitor {
-  public void visit(Program n);
-  public void visit(MainClass n);
-  public void visit(ClassDeclSimple n);
-  public void visit(ClassDeclExtends n);
-  public void visit(VarDecl n);
-  public void visit(MethodDecl n);
-  public void visit(Formal n);
-  public void visit(IntArrayType n);
-  public void visit(BooleanType n);
-  public void visit(IntegerType n);
-  public void visit(IdentifierType n);
-  public void visit(Block n);
-  public void visit(If n);
-  public void visit(While n);
-  public void visit(Print n);
-  public void visit(Assign n);
-  public void visit(ArrayAssign n);
-  public void visit(And n);
-  public void visit(LessThan n);
-  public void visit(Plus n);
-  public void visit(Minus n);
-  public void visit(Times n);
-  public void visit(ArrayLookup n);
-  public void visit(ArrayLength n);
-  public void visit(Call n);
-  public void visit(IntegerLiteral n);
-  public void visit(True n);
-  public void visit(False n);
-  public void visit(IdentifierExp n);
-  public void visit(This n);
-  public void visit(NewArray n);
-  public void visit(NewObject n);
-  public void visit(Not n);
-  public void visit(Identifier n);
+    void visit(Program n);
+
+    void visit(MainClass n);
+
+    void visit(ClassDeclSimple n);
+
+    void visit(ClassDeclExtends n);
+
+    void visit(VarDecl n);
+
+    void visit(MethodDecl n);
+
+    void visit(Formal n);
+
+    void visit(IntArrayType n);
+
+    void visit(BooleanType n);
+
+    void visit(IntegerType n);
+
+    void visit(IdentifierType n);
+
+    void visit(Block n);
+
+    void visit(If n);
+
+    void visit(While n);
+
+    void visit(Print n);
+
+    void visit(Assign n);
+
+    void visit(ArrayAssign n);
+
+    void visit(And n);
+
+    void visit(LessThan n);
+
+    void visit(Plus n);
+
+    void visit(Minus n);
+
+    void visit(Times n);
+
+    void visit(ArrayLookup n);
+
+    void visit(ArrayLength n);
+
+    void visit(Call n);
+
+    void visit(IntegerLiteral n);
+
+    void visit(True n);
+
+    void visit(False n);
+
+    void visit(IdentifierExp n);
+
+    void visit(This n);
+
+    void visit(NewArray n);
+
+    void visit(NewObject n);
+
+    void visit(Not n);
+
+    void visit(Identifier n);
 }
