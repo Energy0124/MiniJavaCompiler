@@ -2,7 +2,7 @@ class test {
     public static void main(String[] a) {
         int x;
         int[] A;
-        Foo fobj;
+        Foo0 fobj;
 
         {
             x = 10 + 4;
@@ -12,7 +12,7 @@ class test {
     }
 }
 
-class Foo {
+class Foo0 {
     int x;
     int y;
 }
