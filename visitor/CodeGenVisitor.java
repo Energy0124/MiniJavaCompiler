@@ -194,8 +194,7 @@ public class CodeGenVisitor extends DepthFirstVisitor {
         } else if (null != (var = currMethod.getParam(n.i.s))) {
             out.println("sw $a0, " + var.offset * 4 + "($fp)    #save " + n.i.s);
         } else if (null != (var = currClass.getVar(n.i.s))) {
-            //todo
-//            out.println("sw $a0, " + var.offset * 4 + "($fp)");
+
             //last param is the calling object
             out.println("lw $t1, " + (currMethod.params.size() + 1) * 4 + "($fp)    #load caller object");
             out.println("sw $a0, " + var.offset * 4 + "($t1)        #load " + n.i.s);
@@ -228,8 +227,7 @@ public class CodeGenVisitor extends DepthFirstVisitor {
         } else if (null != (var = currMethod.getParam(n.i.s))) {
             out.println("lw $a0, " + var.offset * 4 + "($fp)  #load array address " + n.i.s + "[]");
         } else if (null != (var = currClass.getVar(n.i.s))) {
-            //todo
-//            out.println("lw $a0, " + var.offset * 4 + "($fp)");
+
             //last param is the calling object
             out.println("lw $a0, " + (currMethod.params.size() + 1) * 4 + "($fp)  #load caller object");
             out.println("lw $a0, " + var.offset * 4 + "($a0)        #load " + n.i.s);
@@ -489,7 +487,7 @@ public class CodeGenVisitor extends DepthFirstVisitor {
         } else if (null != (var = currMethod.getParam(n.s))) {
             out.println("lw $a0, " + var.offset * 4 + "($fp)        #load " + n.s);
         } else if (null != (var = currClass.getVar(n.s))) {
-            //todo
+
             //last param is the calling object
             out.println("lw $a0, " + (currMethod.params.size() + 1) * 4 + "($fp)  #load caller object");
             out.println("lw $a0, " + var.offset * 4 + "($a0)        #save " + n.s);
