@@ -458,6 +458,8 @@ public class CodeGenVisitor extends DepthFirstVisitor {
 
     // cgen: this
     public void visit(This n) {
+        out.println("lw $a0, " + (currMethod.params.size() + 1) * 4 + "($fp)  #load caller object (this)");
+
     }
 
     // int i;
