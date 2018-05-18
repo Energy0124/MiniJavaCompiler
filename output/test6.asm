@@ -5,7 +5,11 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 
 .text
 
-li $a0, 1
+move $fp, $sp
+addiu $sp, $sp, -4
+addiu $sp, $sp, 0
+
+li $a0, 0xFFFFFFFF
 beq $a0, $0, else_0
 
 li $a0, 1

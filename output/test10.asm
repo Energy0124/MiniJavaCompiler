@@ -5,6 +5,10 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 
 .text
 
+move $fp, $sp
+addiu $sp, $sp, -4
+addiu $sp, $sp, 0
+
 li $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4

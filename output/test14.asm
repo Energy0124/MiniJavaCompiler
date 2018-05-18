@@ -6,10 +6,11 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 .text
 
 move $fp, $sp
-addiu $sp, $sp, -16
+addiu $sp, $sp, -4
+addiu $sp, $sp, -12
 
 li $a0, 1
-sw $a0, 16($fp)
+sw $a0, -12($fp)     #save z
 li $a0, 4
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
@@ -18,8 +19,8 @@ lw $t1, 4($sp)	  # $t1 = stack top
 sub $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 8($fp)
-lw $a0, 16($fp)
+sw $a0, -4($fp)     #save x
+lw $a0, -12($fp)     #load z
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 2
@@ -27,8 +28,8 @@ lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 12($fp)
-lw $a0, 8($fp)
+sw $a0, -8($fp)     #save y
+lw $a0, -4($fp)     #load x
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 1
@@ -38,22 +39,7 @@ addiu $sp, $sp, 4	  # pop
 
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 1
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-lw $t1, 4($sp)	  # $t1 = stack top
-mult $t1, $a0	  # $a0 = $a0 + stack top
-mflo $a0 	  # Moves the value from the LO part of the result register into $a0.
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 1
@@ -66,14 +52,29 @@ mult $t1, $a0	  # $a0 = $a0 + stack top
 mflo $a0 	  # Moves the value from the LO part of the result register into $a0.
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 16($fp)
-lw $a0, 16($fp)
+sw $a0, 0($sp)	  # push value of e1 to stack
+addiu $sp, $sp, -4
+lw $a0, -4($fp)     #load x
+sw $a0, 0($sp)	  # push value of e1 to stack
+addiu $sp, $sp, -4
+li $a0, 1
+lw $t1, 4($sp)	  # $t1 = stack top
+add $a0, $t1, $a0	  # $a0 = $a0 + stack top
+addiu $sp, $sp, 4	  # pop
+
+lw $t1, 4($sp)	  # $t1 = stack top
+mult $t1, $a0	  # $a0 = $a0 + stack top
+mflo $a0 	  # Moves the value from the LO part of the result register into $a0.
+addiu $sp, $sp, 4	  # pop
+
+sw $a0, -12($fp)     #save z
+lw $a0, -12($fp)     #load z
 jal _print_int        # system call code for print_int 
 
-lw $a0, 12($fp)
+lw $a0, -8($fp)     #load y
 jal _print_int        # system call code for print_int 
 
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x
 jal _print_int        # system call code for print_int 
 
 # exit

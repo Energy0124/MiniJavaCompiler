@@ -5,10 +5,14 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 
 .text
 
-li $a0, 1
+move $fp, $sp
+addiu $sp, $sp, -4
+addiu $sp, $sp, 0
+
+li $a0, 0xFFFFFFFF
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-li $a0, 1
+li $a0, 0xFFFFFFFF
 lw $t1, 4($sp)	  # $t1 = stack top
 and $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
@@ -31,7 +35,7 @@ end_if_1:
 li $a0, 0
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-li $a0, 1
+li $a0, 0xFFFFFFFF
 lw $t1, 4($sp)	  # $t1 = stack top
 and $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
@@ -74,7 +78,7 @@ jal _print_int        # system call code for print_int
 
 end_if_5:
 
-li $a0, 1
+li $a0, 0xFFFFFFFF
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 0

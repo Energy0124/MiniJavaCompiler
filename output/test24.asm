@@ -25,9 +25,15 @@ sw $a0, -8($fp)     #save b
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -4($fp)     #load f
+beq $a0, $0, _null_pointer_exception
+sw $a0, 0 ($sp)		#push caller param
+addiu $sp, $sp, -4
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -4($fp)     #load f
+beq $a0, $0, _null_pointer_exception
+sw $a0, 0 ($sp)		#push caller param
+addiu $sp, $sp, -4
 li $a0, 100
 sw $a0, 0 ($sp)		#push param
 addiu $sp, $sp, -4
@@ -37,6 +43,9 @@ addiu $sp, $sp, -4
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -4($fp)     #load f
+beq $a0, $0, _null_pointer_exception
+sw $a0, 0 ($sp)		#push caller param
+addiu $sp, $sp, -4
 li $a0, 1
 sw $a0, 0 ($sp)		#push param
 addiu $sp, $sp, -4
@@ -67,7 +76,7 @@ addiu $sp, $sp, 4	  # pop
 
 addiu $sp, $sp, 0
 lw $ra, 4($sp) # restore $ra
-addiu $sp, $sp, 16
+addiu $sp, $sp, 20
 lw $fp, 0($sp)# restore $fp
 jr $ra
 
@@ -88,7 +97,7 @@ sw $a0, -4($fp)     #save y
 lw $a0, -4($fp)     #load y
 addiu $sp, $sp, 4
 lw $ra, 4($sp) # restore $ra
-addiu $sp, $sp, 12
+addiu $sp, $sp, 16
 lw $fp, 0($sp)# restore $fp
 jr $ra
 

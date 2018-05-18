@@ -1,9 +1,13 @@
- .data
+.data
 newline: .asciiz "\n"
 msg_index_out_of_bound_exception: .asciiz "Index out of bound exception\n"
 msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 
 .text
+
+move $fp, $sp
+addiu $sp, $sp, -4
+addiu $sp, $sp, 0
 
 li $a0, 0xFFFFFFFF
 beq $a0, $0, else_0
@@ -15,14 +19,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_4
 
 li $a0, 1
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_5
 
 else_4:
 li $a0, 2
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_5:
@@ -35,14 +39,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_6
 
 li $a0, 3
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_7
 
 else_6:
 li $a0, 4
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_7:
@@ -61,14 +65,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_10
 
 li $a0, 5
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_11
 
 else_10:
 li $a0, 6
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_11:
@@ -81,14 +85,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_12
 
 li $a0, 7
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_13
 
 else_12:
 li $a0, 8
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_13:
@@ -109,14 +113,14 @@ li $a0, 0
 beq $a0, $0, else_18
 
 li $a0, 1
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_19
 
 else_18:
 li $a0, 2
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_19:
@@ -129,14 +133,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_20
 
 li $a0, 3
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_21
 
 else_20:
 li $a0, 4
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_21:
@@ -155,14 +159,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_24
 
 li $a0, 5
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_25
 
 else_24:
 li $a0, 6
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_25:
@@ -175,14 +179,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_26
 
 li $a0, 7
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_27
 
 else_26:
 li $a0, 8
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_27:
@@ -203,14 +207,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_32
 
 li $a0, 1
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_33
 
 else_32:
 li $a0, 2
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_33:
@@ -223,14 +227,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_34
 
 li $a0, 3
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_35
 
 else_34:
 li $a0, 4
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_35:
@@ -249,14 +253,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_38
 
 li $a0, 5
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_39
 
 else_38:
 li $a0, 6
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_39:
@@ -269,14 +273,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_40
 
 li $a0, 7
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_41
 
 else_40:
 li $a0, 8
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_41:
@@ -297,14 +301,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_46
 
 li $a0, 1
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_47
 
 else_46:
 li $a0, 2
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_47:
@@ -317,14 +321,14 @@ li $a0, 0
 beq $a0, $0, else_48
 
 li $a0, 3
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_49
 
 else_48:
 li $a0, 4
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_49:
@@ -343,14 +347,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_52
 
 li $a0, 5
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_53
 
 else_52:
 li $a0, 6
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_53:
@@ -363,14 +367,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_54
 
 li $a0, 7
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_55
 
 else_54:
 li $a0, 8
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_55:
@@ -391,14 +395,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_60
 
 li $a0, 1
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_61
 
 else_60:
 li $a0, 2
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_61:
@@ -411,14 +415,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_62
 
 li $a0, 3
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_63
 
 else_62:
 li $a0, 4
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_63:
@@ -437,14 +441,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_66
 
 li $a0, 5
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_67
 
 else_66:
 li $a0, 6
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_67:
@@ -457,14 +461,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_68
 
 li $a0, 7
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_69
 
 else_68:
 li $a0, 8
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_69:
@@ -485,14 +489,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_74
 
 li $a0, 1
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_75
 
 else_74:
 li $a0, 2
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_75:
@@ -505,14 +509,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_76
 
 li $a0, 3
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_77
 
 else_76:
 li $a0, 4
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_77:
@@ -531,14 +535,14 @@ li $a0, 0
 beq $a0, $0, else_80
 
 li $a0, 5
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_81
 
 else_80:
 li $a0, 6
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_81:
@@ -551,14 +555,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_82
 
 li $a0, 7
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_83
 
 else_82:
 li $a0, 8
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_83:
@@ -579,14 +583,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_88
 
 li $a0, 1
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_89
 
 else_88:
 li $a0, 2
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_89:
@@ -599,14 +603,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_90
 
 li $a0, 3
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_91
 
 else_90:
 li $a0, 4
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_91:
@@ -625,14 +629,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_94
 
 li $a0, 5
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_95
 
 else_94:
 li $a0, 6
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_95:
@@ -645,14 +649,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_96
 
 li $a0, 7
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_97
 
 else_96:
 li $a0, 8
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_97:
@@ -673,14 +677,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_102
 
 li $a0, 1
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_103
 
 else_102:
 li $a0, 2
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_103:
@@ -693,14 +697,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_104
 
 li $a0, 3
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_105
 
 else_104:
 li $a0, 4
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_105:
@@ -719,14 +723,14 @@ li $a0, 0xFFFFFFFF
 beq $a0, $0, else_108
 
 li $a0, 5
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_109
 
 else_108:
 li $a0, 6
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_109:
@@ -739,14 +743,14 @@ li $a0, 0
 beq $a0, $0, else_110
 
 li $a0, 7
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 b end_if_111
 
 else_110:
 li $a0, 8
-jal _print_int        # system call code for print_int
+jal _print_int        # system call code for print_int 
 
 
 end_if_111:

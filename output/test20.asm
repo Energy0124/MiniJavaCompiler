@@ -43,7 +43,7 @@ sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 #end ArrayAssign e1
 #start ArrayAssign i
-lw $a0, -4($fp)   #save A[syntaxtree.IdentifierExp@1540e19d]
+lw $a0, -4($fp)   #load array address A[]
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -83,7 +83,7 @@ sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 #end ArrayAssign e1
 #start ArrayAssign i
-lw $a0, -4($fp)   #save A[syntaxtree.IntegerLiteral@677327b6]
+lw $a0, -4($fp)   #load array address A[]
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -153,7 +153,7 @@ sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 #end ArrayAssign e1
 #start ArrayAssign i
-lw $a0, -4($fp)   #save A[syntaxtree.IntegerLiteral@14ae5a5]
+lw $a0, -4($fp)   #load array address A[]
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2

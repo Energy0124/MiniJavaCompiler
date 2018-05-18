@@ -23,11 +23,17 @@ sw $a0, -4($fp)     #save f
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -4($fp)     #load f
+beq $a0, $0, _null_pointer_exception
+sw $a0, 0 ($sp)		#push caller param
+addiu $sp, $sp, -4
 jal Foo2__m1
 sw $a0, -8($fp)     #save a
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -4($fp)     #load f
+beq $a0, $0, _null_pointer_exception
+sw $a0, 0 ($sp)		#push caller param
+addiu $sp, $sp, -4
 jal Foo2__m2
 sw $a0, -12($fp)     #save b
 lw $a0, -8($fp)     #load a
@@ -50,12 +56,17 @@ jal _print_int        # system call code for print_int
 
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
+lw $a0, 4($fp)  #load caller object (this)
+beq $a0, $0, _null_pointer_exception
+beq $a0, $0, _null_pointer_exception
+sw $a0, 0 ($sp)		#push caller param
+addiu $sp, $sp, -4
 jal Foo2__m2
 sw $a0, -4($fp)     #save a
 lw $a0, -4($fp)     #load a
 addiu $sp, $sp, 4
 lw $ra, 4($sp) # restore $ra
-addiu $sp, $sp, 8
+addiu $sp, $sp, 12
 lw $fp, 0($sp)# restore $fp
 jr $ra
 
@@ -70,7 +81,7 @@ jal _print_int        # system call code for print_int
 li $a0, 1
 addiu $sp, $sp, 0
 lw $ra, 4($sp) # restore $ra
-addiu $sp, $sp, 8
+addiu $sp, $sp, 12
 lw $fp, 0($sp)# restore $fp
 jr $ra
 

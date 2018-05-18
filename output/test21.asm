@@ -7,6 +7,7 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 
 move $fp, $sp
 addiu $sp, $sp, -4
+addiu $sp, $sp, -4
 
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
@@ -20,6 +21,9 @@ sw $t1, 0($v0)
 li $t1, 3
 sw $t1, 4($v0)
 move $a0, $v0
+beq $a0, $0, _null_pointer_exception
+sw $a0, 0 ($sp)		#push caller param
+addiu $sp, $sp, -4
 jal Foo__f
 jal _print_int        # system call code for print_int 
 
@@ -35,7 +39,7 @@ addiu $sp, $sp, 0
 li $a0, 999
 addiu $sp, $sp, 0
 lw $ra, 4($sp) # restore $ra
-addiu $sp, $sp, 8
+addiu $sp, $sp, 12
 lw $fp, 0($sp)# restore $fp
 jr $ra
 

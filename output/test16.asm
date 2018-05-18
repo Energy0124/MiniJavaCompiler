@@ -7,6 +7,7 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 
 move $fp, $sp
 addiu $sp, $sp, -4
+addiu $sp, $sp, -4
 
 li $a0, 1
 sw $a0, -4($fp)     #save x

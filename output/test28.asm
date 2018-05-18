@@ -34,6 +34,7 @@ sw $a0, -8($fp)     #save bar
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -4($fp)     #load foo
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 li $a0, 2000
@@ -47,6 +48,7 @@ sw $a0, -12($fp)     #save dummy
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -4($fp)     #load foo
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 jal Foo8__f
@@ -54,6 +56,7 @@ sw $a0, -12($fp)     #save dummy
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -4($fp)     #load foo
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 jal Foo8__f
@@ -61,6 +64,7 @@ sw $a0, -12($fp)     #save dummy
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -4($fp)     #load foo
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 jal Foo8__g
@@ -68,6 +72,7 @@ sw $a0, -12($fp)     #save dummy
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -4($fp)     #load foo
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 jal Foo8__g
@@ -75,6 +80,7 @@ sw $a0, -12($fp)     #save dummy
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -8($fp)     #load bar
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 lw $a0, -4($fp)     #load foo
@@ -85,6 +91,7 @@ sw $a0, -12($fp)     #save dummy
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -8($fp)     #load bar
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 jal Bar8__f
@@ -93,6 +100,7 @@ jal _print_int        # system call code for print_int
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -8($fp)     #load bar
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 jal Bar8__g
@@ -110,6 +118,8 @@ addiu $sp, $sp, -4
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, 12($fp)  #load caller object (this)
+beq $a0, $0, _null_pointer_exception
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 lw $a0, 4($fp)        #load _x
@@ -120,6 +130,8 @@ sw $a0, -4($fp)     #save temp
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, 12($fp)  #load caller object (this)
+beq $a0, $0, _null_pointer_exception
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 lw $a0, 8($fp)        #load _y
@@ -140,6 +152,7 @@ sw $ra, 0($sp) # push $ra
 addiu $sp, $sp, -4
 addiu $sp, $sp, 0
 lw $a0, 4($fp)  #load caller object
+beq $a0, $0, _null_pointer_exception
 lw $a0, 12($a0)        #save x
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
@@ -149,6 +162,7 @@ add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
 lw $t1, 4($fp)    #load caller object
+beq $t1, $0, _null_pointer_exception
 sw $a0, 12($t1)        #load x
 li $a0, 0
 addiu $sp, $sp, 0
@@ -163,6 +177,7 @@ sw $ra, 0($sp) # push $ra
 addiu $sp, $sp, -4
 addiu $sp, $sp, 0
 lw $a0, 4($fp)  #load caller object
+beq $a0, $0, _null_pointer_exception
 lw $a0, 16($a0)        #save y
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
@@ -172,6 +187,7 @@ add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
 lw $t1, 4($fp)    #load caller object
+beq $t1, $0, _null_pointer_exception
 sw $a0, 16($t1)        #load y
 li $a0, 0
 addiu $sp, $sp, 0
@@ -187,6 +203,7 @@ addiu $sp, $sp, -4
 addiu $sp, $sp, 0
 lw $a0, 4($fp)        #load _x
 lw $t1, 8($fp)    #load caller object
+beq $t1, $0, _null_pointer_exception
 sw $a0, 12($t1)        #load x
 li $a0, 0
 addiu $sp, $sp, 0
@@ -202,6 +219,7 @@ addiu $sp, $sp, -4
 addiu $sp, $sp, 0
 lw $a0, 4($fp)        #load _y
 lw $t1, 8($fp)    #load caller object
+beq $t1, $0, _null_pointer_exception
 sw $a0, 16($t1)        #load y
 li $a0, 0
 addiu $sp, $sp, 0
@@ -216,6 +234,7 @@ sw $ra, 0($sp) # push $ra
 addiu $sp, $sp, -4
 addiu $sp, $sp, 0
 lw $a0, 4($fp)  #load caller object
+beq $a0, $0, _null_pointer_exception
 lw $a0, 12($a0)        #save x
 addiu $sp, $sp, 0
 lw $ra, 4($sp) # restore $ra
@@ -229,6 +248,7 @@ sw $ra, 0($sp) # push $ra
 addiu $sp, $sp, -4
 addiu $sp, $sp, 0
 lw $a0, 4($fp)  #load caller object
+beq $a0, $0, _null_pointer_exception
 lw $a0, 16($a0)        #save y
 addiu $sp, $sp, 0
 lw $ra, 4($sp) # restore $ra
@@ -243,6 +263,7 @@ addiu $sp, $sp, -4
 addiu $sp, $sp, 0
 lw $a0, 4($fp)        #load _foo
 lw $t1, 8($fp)    #load caller object
+beq $t1, $0, _null_pointer_exception
 sw $a0, 12($t1)        #load foo
 li $a0, 0
 addiu $sp, $sp, 0
@@ -259,7 +280,9 @@ addiu $sp, $sp, -4
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, 4($fp)  #load caller object
+beq $a0, $0, _null_pointer_exception
 lw $a0, 12($a0)        #save foo
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 jal Foo8__f
@@ -267,7 +290,9 @@ sw $a0, -4($fp)     #save dummy
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, 4($fp)  #load caller object
+beq $a0, $0, _null_pointer_exception
 lw $a0, 12($a0)        #save foo
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 jal Foo8__getX
@@ -285,7 +310,9 @@ addiu $sp, $sp, -4
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, 4($fp)  #load caller object
+beq $a0, $0, _null_pointer_exception
 lw $a0, 12($a0)        #save foo
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 jal Foo8__g
@@ -293,7 +320,9 @@ sw $a0, -4($fp)     #save dummy
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, 4($fp)  #load caller object
+beq $a0, $0, _null_pointer_exception
 lw $a0, 12($a0)        #save foo
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 jal Foo8__getY

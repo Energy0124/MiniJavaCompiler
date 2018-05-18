@@ -197,6 +197,8 @@ public class CodeGenVisitor extends DepthFirstVisitor {
 
             //last param is the calling object
             out.println("lw $t1, " + (currMethod.params.size() + 1) * 4 + "($fp)    #load caller object");
+            //check null
+            out.println("beq $t1, $0, _null_pointer_exception");
             out.println("sw $a0, " + var.offset * 4 + "($t1)        #load " + n.i.s);
 
         }
@@ -230,6 +232,8 @@ public class CodeGenVisitor extends DepthFirstVisitor {
 
             //last param is the calling object
             out.println("lw $a0, " + (currMethod.params.size() + 1) * 4 + "($fp)  #load caller object");
+            //check null
+            out.println("beq $a0, $0, _null_pointer_exception");
             out.println("lw $a0, " + var.offset * 4 + "($a0)        #load " + n.i.s);
 
         }
@@ -390,6 +394,8 @@ public class CodeGenVisitor extends DepthFirstVisitor {
 
         //reverse order , last param is the caller, so push first
         n.e.accept(this);
+        //check null
+        out.println("beq $a0, $0, _null_pointer_exception");
         out.println("sw $a0, 0 ($sp)		#push caller param");
         out.println("addiu $sp, $sp, -4");
 
@@ -457,7 +463,8 @@ public class CodeGenVisitor extends DepthFirstVisitor {
     // cgen: this
     public void visit(This n) {
         out.println("lw $a0, " + (currMethod.params.size() + 1) * 4 + "($fp)  #load caller object (this)");
-
+        //check null
+        out.println("beq $a0, $0, _null_pointer_exception");
     }
 
     // int i;
@@ -490,6 +497,8 @@ public class CodeGenVisitor extends DepthFirstVisitor {
 
             //last param is the calling object
             out.println("lw $a0, " + (currMethod.params.size() + 1) * 4 + "($fp)  #load caller object");
+            //check null
+            out.println("beq $a0, $0, _null_pointer_exception");
             out.println("lw $a0, " + var.offset * 4 + "($a0)        #save " + n.s);
 
 

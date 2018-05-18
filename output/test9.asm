@@ -5,6 +5,10 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 
 .text
 
+move $fp, $sp
+addiu $sp, $sp, -4
+addiu $sp, $sp, 0
+
 li $a0, 0xFFFFFFFF
 nor $a0, $a0, $a0 	 #not $a0
 

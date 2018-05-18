@@ -6,18 +6,19 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 .text
 
 move $fp, $sp
-addiu $sp, $sp, -28
+addiu $sp, $sp, -4
+addiu $sp, $sp, -24
 
 li $a0, 10
-sw $a0, 28($fp)
-lw $a0, 28($fp)
+sw $a0, -24($fp)     #save N
+lw $a0, -24($fp)     #load N
 jal _alloc_int_array
 move $a0, $v0
-sw $a0, 8($fp)
-lw $a0, 28($fp)
+sw $a0, -4($fp)     #save A
+lw $a0, -24($fp)     #load N
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 28($fp)
+lw $a0, -24($fp)     #load N
 lw $t1, 4($sp)	  # $t1 = stack top
 mult $t1, $a0	  # $a0 = $a0 + stack top
 mflo $a0 	  # Moves the value from the LO part of the result register into $a0.
@@ -25,14 +26,14 @@ addiu $sp, $sp, 4	  # pop
 
 jal _alloc_int_array
 move $a0, $v0
-sw $a0, 12($fp)
+sw $a0, -8($fp)     #save B
 li $a0, 0
-sw $a0, 20($fp)
+sw $a0, -16($fp)     #save i
 while_start_0:
-lw $a0, 20($fp)
+lw $a0, -16($fp)     #load i
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $a0, 0($a0)
 lw $t1, 4($sp)	  # $t1 = stack top
@@ -43,13 +44,13 @@ beq $a0, $0, while_end_1
 
 #start ArrayAssign
 #start ArrayAssign e1
-lw $a0, 20($fp)
+lw $a0, -16($fp)     #load i
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 #end ArrayAssign e1
 #start ArrayAssign i
-lw $a0, 8($fp)
+lw $a0, -4($fp)   #load array address A[]
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -63,19 +64,19 @@ sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 #end ArrayAssign i
 #start ArrayAssign e2
-lw $a0, 20($fp)
+lw $a0, -16($fp)     #load i
 lw $t1, 4($sp)	  # $t1 = stack top
 addiu $sp, $sp, 4	  # pop
 sw $a0, 0($t1)
 #end ArrayAssign e2
 #end ArrayAssign
 li $a0, 0
-sw $a0, 24($fp)
+sw $a0, -20($fp)     #save j
 while_start_2:
-lw $a0, 24($fp)
+lw $a0, -20($fp)     #load j
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 28($fp)
+lw $a0, -24($fp)     #load N
 lw $t1, 4($sp)	  # $t1 = stack top
 slt $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
@@ -84,10 +85,10 @@ beq $a0, $0, while_end_3
 
 #start ArrayAssign
 #start ArrayAssign e1
-lw $a0, 20($fp)
+lw $a0, -16($fp)     #load i
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 28($fp)
+lw $a0, -24($fp)     #load N
 lw $t1, 4($sp)	  # $t1 = stack top
 mult $t1, $a0	  # $a0 = $a0 + stack top
 mflo $a0 	  # Moves the value from the LO part of the result register into $a0.
@@ -95,7 +96,7 @@ addiu $sp, $sp, 4	  # pop
 
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 24($fp)
+lw $a0, -20($fp)     #load j
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
@@ -105,7 +106,7 @@ sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 #end ArrayAssign e1
 #start ArrayAssign i
-lw $a0, 12($fp)
+lw $a0, -8($fp)   #load array address B[]
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -119,10 +120,10 @@ sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 #end ArrayAssign i
 #start ArrayAssign e2
-lw $a0, 20($fp)
+lw $a0, -16($fp)     #load i
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 28($fp)
+lw $a0, -24($fp)     #load N
 lw $t1, 4($sp)	  # $t1 = stack top
 mult $t1, $a0	  # $a0 = $a0 + stack top
 mflo $a0 	  # Moves the value from the LO part of the result register into $a0.
@@ -130,7 +131,7 @@ addiu $sp, $sp, 4	  # pop
 
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 24($fp)
+lw $a0, -20($fp)     #load j
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
@@ -140,7 +141,7 @@ addiu $sp, $sp, 4	  # pop
 sw $a0, 0($t1)
 #end ArrayAssign e2
 #end ArrayAssign
-lw $a0, 24($fp)
+lw $a0, -20($fp)     #load j
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 1
@@ -148,13 +149,13 @@ lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 24($fp)
+sw $a0, -20($fp)     #save j
 
 b while_start_2
 
 while_end_3:
 
-lw $a0, 20($fp)
+lw $a0, -16($fp)     #load i
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 1
@@ -162,19 +163,19 @@ lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 20($fp)
+sw $a0, -16($fp)     #save i
 
 b while_start_0
 
 while_end_1:
 
 li $a0, 0
-sw $a0, 20($fp)
+sw $a0, -16($fp)     #save i
 while_start_4:
-lw $a0, 20($fp)
+lw $a0, -16($fp)     #load i
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $a0, 0($a0)
 lw $t1, 4($sp)	  # $t1 = stack top
@@ -183,11 +184,11 @@ addiu $sp, $sp, 4	  # pop
 
 beq $a0, $0, while_end_5
 
-lw $a0, 20($fp)
+lw $a0, -16($fp)     #load i
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -200,10 +201,10 @@ addiu $sp, $sp, 4	  # pop
 lw $a0, 0($a0)
 jal _print_int        # system call code for print_int 
 
-lw $a0, 20($fp)
+lw $a0, -16($fp)     #load i
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 28($fp)
+lw $a0, -24($fp)     #load N
 lw $t1, 4($sp)	  # $t1 = stack top
 mult $t1, $a0	  # $a0 = $a0 + stack top
 mflo $a0 	  # Moves the value from the LO part of the result register into $a0.
@@ -212,7 +213,7 @@ addiu $sp, $sp, 4	  # pop
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 12($fp)
+lw $a0, -8($fp)     #load B
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -225,7 +226,7 @@ addiu $sp, $sp, 4	  # pop
 lw $a0, 0($a0)
 jal _print_int        # system call code for print_int 
 
-lw $a0, 20($fp)
+lw $a0, -16($fp)     #load i
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 1
@@ -233,7 +234,7 @@ lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 20($fp)
+sw $a0, -16($fp)     #save i
 
 b while_start_4
 

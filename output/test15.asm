@@ -6,191 +6,192 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 .text
 
 move $fp, $sp
-addiu $sp, $sp, -68
+addiu $sp, $sp, -4
+addiu $sp, $sp, -64
 
 li $a0, 1
-sw $a0, 8($fp)
+sw $a0, -4($fp)     #save x1
 li $a0, 2
-sw $a0, 12($fp)
+sw $a0, -8($fp)     #save x2
 li $a0, 3
-sw $a0, 16($fp)
+sw $a0, -12($fp)     #save x3
 li $a0, 4
-sw $a0, 20($fp)
+sw $a0, -16($fp)     #save x4
 li $a0, 5
-sw $a0, 24($fp)
+sw $a0, -20($fp)     #save x5
 li $a0, 6
-sw $a0, 28($fp)
+sw $a0, -24($fp)     #save x6
 li $a0, 7
-sw $a0, 32($fp)
+sw $a0, -28($fp)     #save x7
 li $a0, 8
-sw $a0, 36($fp)
+sw $a0, -32($fp)     #save x8
 li $a0, 9
-sw $a0, 40($fp)
+sw $a0, -36($fp)     #save x9
 li $a0, 10
-sw $a0, 44($fp)
+sw $a0, -40($fp)     #save x10
 li $a0, 11
-sw $a0, 48($fp)
+sw $a0, -44($fp)     #save x11
 li $a0, 12
-sw $a0, 52($fp)
+sw $a0, -48($fp)     #save x12
 li $a0, 13
-sw $a0, 56($fp)
+sw $a0, -52($fp)     #save x13
 li $a0, 14
-sw $a0, 60($fp)
+sw $a0, -56($fp)     #save x14
 li $a0, 15
-sw $a0, 64($fp)
+sw $a0, -60($fp)     #save x15
 li $a0, 16
-sw $a0, 68($fp)
-lw $a0, 8($fp)
+sw $a0, -64($fp)     #save x16
+lw $a0, -4($fp)     #load x1
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x1
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 8($fp)
-lw $a0, 12($fp)
+sw $a0, -4($fp)     #save x1
+lw $a0, -8($fp)     #load x2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x1
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 12($fp)
-lw $a0, 16($fp)
+sw $a0, -8($fp)     #save x2
+lw $a0, -12($fp)     #load x3
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x1
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 16($fp)
-lw $a0, 20($fp)
+sw $a0, -12($fp)     #save x3
+lw $a0, -16($fp)     #load x4
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x1
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 20($fp)
-lw $a0, 24($fp)
+sw $a0, -16($fp)     #save x4
+lw $a0, -20($fp)     #load x5
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x1
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 24($fp)
-lw $a0, 28($fp)
+sw $a0, -20($fp)     #save x5
+lw $a0, -24($fp)     #load x6
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x1
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 28($fp)
-lw $a0, 32($fp)
+sw $a0, -24($fp)     #save x6
+lw $a0, -28($fp)     #load x7
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x1
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 32($fp)
-lw $a0, 36($fp)
+sw $a0, -28($fp)     #save x7
+lw $a0, -32($fp)     #load x8
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x1
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 36($fp)
-lw $a0, 40($fp)
+sw $a0, -32($fp)     #save x8
+lw $a0, -36($fp)     #load x9
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x1
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 40($fp)
-lw $a0, 44($fp)
+sw $a0, -36($fp)     #save x9
+lw $a0, -40($fp)     #load x10
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-lw $a0, 12($fp)
+lw $a0, -4($fp)     #load x1
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 16($fp)
+lw $a0, -8($fp)     #load x2
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 20($fp)
+lw $a0, -12($fp)     #load x3
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 44($fp)
-lw $a0, 48($fp)
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -16($fp)     #load x4
+lw $t1, 4($sp)	  # $t1 = stack top
+add $a0, $t1, $a0	  # $a0 = $a0 + stack top
+addiu $sp, $sp, 4	  # pop
+
+sw $a0, -40($fp)     #save x10
+lw $a0, -44($fp)     #load x11
+sw $a0, 0($sp)	  # push value of e1 to stack
+addiu $sp, $sp, -4
+lw $a0, -4($fp)     #load x1
 lw $t1, 4($sp)	  # $t1 = stack top
 sub $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 12($fp)
+lw $a0, -8($fp)     #load x2
 lw $t1, 4($sp)	  # $t1 = stack top
 sub $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 16($fp)
+lw $a0, -12($fp)     #load x3
 lw $t1, 4($sp)	  # $t1 = stack top
 sub $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 20($fp)
+lw $a0, -16($fp)     #load x4
 lw $t1, 4($sp)	  # $t1 = stack top
 sub $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 48($fp)
-lw $a0, 52($fp)
+sw $a0, -44($fp)     #save x11
+lw $a0, -48($fp)     #load x12
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 52($fp)
+lw $a0, -48($fp)     #load x12
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 52($fp)
-lw $a0, 56($fp)
+sw $a0, -48($fp)     #save x12
+lw $a0, -52($fp)     #load x13
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 1
@@ -200,7 +201,7 @@ addiu $sp, $sp, 4	  # pop
 
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 56($fp)
+lw $a0, -52($fp)     #load x13
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 1
@@ -220,8 +221,8 @@ lw $t1, 4($sp)	  # $t1 = stack top
 sub $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 56($fp)
-lw $a0, 60($fp)
+sw $a0, -52($fp)     #save x13
+lw $a0, -56($fp)     #load x14
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 1
@@ -231,20 +232,20 @@ addiu $sp, $sp, 4	  # pop
 
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 60($fp)
+lw $a0, -56($fp)     #load x14
 lw $t1, 4($sp)	  # $t1 = stack top
 sub $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 64($fp)
+lw $a0, -60($fp)     #load x15
 lw $t1, 4($sp)	  # $t1 = stack top
 sub $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 60($fp)
-lw $a0, 64($fp)
+sw $a0, -56($fp)     #save x14
+lw $a0, -60($fp)     #load x15
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 2
@@ -263,14 +264,14 @@ addiu $sp, $sp, 4	  # pop
 
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 64($fp)
+lw $a0, -60($fp)     #load x15
 lw $t1, 4($sp)	  # $t1 = stack top
 mult $t1, $a0	  # $a0 = $a0 + stack top
 mflo $a0 	  # Moves the value from the LO part of the result register into $a0.
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 64($fp)
-lw $a0, 68($fp)
+sw $a0, -60($fp)     #save x15
+lw $a0, -64($fp)     #load x16
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 0
@@ -285,53 +286,53 @@ lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 68($fp)
-lw $a0, 8($fp)
+sw $a0, -64($fp)     #save x16
+lw $a0, -4($fp)     #load x1
 jal _print_int        # system call code for print_int 
 
-lw $a0, 12($fp)
+lw $a0, -8($fp)     #load x2
 jal _print_int        # system call code for print_int 
 
-lw $a0, 16($fp)
+lw $a0, -12($fp)     #load x3
 jal _print_int        # system call code for print_int 
 
-lw $a0, 20($fp)
+lw $a0, -16($fp)     #load x4
 jal _print_int        # system call code for print_int 
 
-lw $a0, 24($fp)
+lw $a0, -20($fp)     #load x5
 jal _print_int        # system call code for print_int 
 
-lw $a0, 28($fp)
+lw $a0, -24($fp)     #load x6
 jal _print_int        # system call code for print_int 
 
-lw $a0, 32($fp)
+lw $a0, -28($fp)     #load x7
 jal _print_int        # system call code for print_int 
 
-lw $a0, 36($fp)
+lw $a0, -32($fp)     #load x8
 jal _print_int        # system call code for print_int 
 
-lw $a0, 40($fp)
+lw $a0, -36($fp)     #load x9
 jal _print_int        # system call code for print_int 
 
-lw $a0, 44($fp)
+lw $a0, -40($fp)     #load x10
 jal _print_int        # system call code for print_int 
 
-lw $a0, 48($fp)
+lw $a0, -44($fp)     #load x11
 jal _print_int        # system call code for print_int 
 
-lw $a0, 52($fp)
+lw $a0, -48($fp)     #load x12
 jal _print_int        # system call code for print_int 
 
-lw $a0, 56($fp)
+lw $a0, -52($fp)     #load x13
 jal _print_int        # system call code for print_int 
 
-lw $a0, 60($fp)
+lw $a0, -56($fp)     #load x14
 jal _print_int        # system call code for print_int 
 
-lw $a0, 64($fp)
+lw $a0, -60($fp)     #load x15
 jal _print_int        # system call code for print_int 
 
-lw $a0, 68($fp)
+lw $a0, -64($fp)     #load x16
 jal _print_int        # system call code for print_int 
 
 # exit

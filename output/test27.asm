@@ -95,6 +95,7 @@ addiu $sp, $sp, -4
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -4($fp)     #load foo
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 lw $a0, -8($fp)     #load B
@@ -120,6 +121,7 @@ addiu $sp, $sp, -4
 sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
 lw $a0, -4($fp)     #load foo
+beq $a0, $0, _null_pointer_exception
 sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
 lw $a0, -8($fp)     #load B

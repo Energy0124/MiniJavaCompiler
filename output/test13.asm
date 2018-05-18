@@ -6,21 +6,22 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 .text
 
 move $fp, $sp
-addiu $sp, $sp, -16
+addiu $sp, $sp, -4
+addiu $sp, $sp, -12
 
 li $a0, 1
-sw $a0, 8($fp)
+sw $a0, -4($fp)     #save x
 li $a0, 2
-sw $a0, 12($fp)
+sw $a0, -8($fp)     #save y
 li $a0, 3
-sw $a0, 16($fp)
-lw $a0, 16($fp)
+sw $a0, -12($fp)     #save z
+lw $a0, -12($fp)     #load z
 jal _print_int        # system call code for print_int 
 
-lw $a0, 12($fp)
+lw $a0, -8($fp)     #load y
 jal _print_int        # system call code for print_int 
 
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x
 jal _print_int        # system call code for print_int 
 
 # exit

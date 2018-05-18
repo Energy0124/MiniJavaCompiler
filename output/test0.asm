@@ -5,12 +5,19 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 
 .text
 
+move $fp, $sp
+addiu $sp, $sp, -4
+addiu $sp, $sp, 0
+
 li $a0, 1234
 jal _print_int        # system call code for print_int 
+
 li $a0, 1234567890
 jal _print_int        # system call code for print_int 
+
 li $a0, 987654321
 jal _print_int        # system call code for print_int 
+
 # exit
 li $v0, 10
 syscall

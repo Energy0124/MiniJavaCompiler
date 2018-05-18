@@ -6,14 +6,15 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 .text
 
 move $fp, $sp
-addiu $sp, $sp, -16
+addiu $sp, $sp, -4
+addiu $sp, $sp, -12
 
 li $a0, 0
-sw $a0, 16($fp)
+sw $a0, -12($fp)     #save sum
 li $a0, 1
-sw $a0, 8($fp)
+sw $a0, -4($fp)     #save x
 while_start_0:
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 10
@@ -24,9 +25,9 @@ addiu $sp, $sp, 4	  # pop
 beq $a0, $0, while_end_1
 
 li $a0, 1
-sw $a0, 12($fp)
+sw $a0, -8($fp)     #save y
 while_start_2:
-lw $a0, 12($fp)
+lw $a0, -8($fp)     #load y
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 10
@@ -36,17 +37,17 @@ addiu $sp, $sp, 4	  # pop
 
 beq $a0, $0, while_end_3
 
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 12($fp)
+lw $a0, -8($fp)     #load y
 lw $t1, 4($sp)	  # $t1 = stack top
 slt $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
 beq $a0, $0, else_4
 
-lw $a0, 16($fp)
+lw $a0, -12($fp)     #load sum
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 1
@@ -54,7 +55,7 @@ lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 16($fp)
+sw $a0, -12($fp)     #save sum
 
 b end_if_5
 
@@ -62,7 +63,7 @@ else_4:
 
 end_if_5:
 
-lw $a0, 12($fp)
+lw $a0, -8($fp)     #load y
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 1
@@ -70,13 +71,13 @@ lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 12($fp)
+sw $a0, -8($fp)     #save y
 
 b while_start_2
 
 while_end_3:
 
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load x
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
 li $a0, 1
@@ -84,13 +85,13 @@ lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-sw $a0, 8($fp)
+sw $a0, -4($fp)     #save x
 
 b while_start_0
 
 while_end_1:
 
-lw $a0, 16($fp)
+lw $a0, -12($fp)     #load sum
 jal _print_int        # system call code for print_int 
 
 # exit
