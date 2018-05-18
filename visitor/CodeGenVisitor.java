@@ -3,6 +3,9 @@ package visitor;
 import syntaxtree.*;
 
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class CodeGenVisitor extends DepthFirstVisitor {
     static int labelId = 0;
@@ -61,10 +64,12 @@ public class CodeGenVisitor extends DepthFirstVisitor {
         // Generate code to reserve space for local variables in stack
         // Optionally, generate code to reserve space for temps
         out.println("move $fp, $sp");
+        //no ra to push, so do nothing
+        out.println("addiu $sp, $sp, -4");//still need to increase stack top for consistent
 
 
-        int totalOffset = currMethod.vars.entrySet().size() * 4 + currMethod.params.size() * 4;
-        out.println("addiu $sp, $sp, " + -totalOffset);
+        int localsOffset = currMethod.vars.entrySet().size() * 4;
+        out.println("addiu $sp, $sp, " + -localsOffset); //reserve space for locals
         out.println();
 
         n.s.accept(this);
@@ -74,6 +79,11 @@ public class CodeGenVisitor extends DepthFirstVisitor {
     // VarDeclList vl;
     // MethodDeclList ml;
     public void visit(ClassDeclSimple n) {
+        currClass = symbolTable.getClass(n.i.s);
+
+        for (int i = 0; i < n.ml.size(); i++) {
+            n.ml.elementAt(i).accept(this);
+        }
     }
 
     // Type t;
@@ -84,6 +94,31 @@ public class CodeGenVisitor extends DepthFirstVisitor {
     // Exp e;
     // cgen: t i(fl) { vl sl return e; }
     public void visit(MethodDecl n) {
+        currMethod = currClass.getMethod(n.i.s);
+
+
+        out.println(currClass.id + "__" + currMethod.id + ":");
+
+        out.println("move $fp, $sp");
+        out.println("sw $ra, 0($sp) # push $ra");
+        out.println("addiu $sp, $sp, -4");
+
+        int paramsOffset = currMethod.params.size() * 4;
+        int localsOffset = currMethod.vars.entrySet().size() * 4;
+        out.println("addiu $sp, $sp, " + -localsOffset);
+
+        for (int i = 0; i < n.sl.size(); i++) {
+            n.sl.elementAt(i).accept(this);
+        }
+
+        n.e.accept(this); //return
+
+        out.println("addiu $sp, $sp, " + (localsOffset));
+        out.println("lw $ra, 4($sp) # restore $ra");
+        out.println("addiu $sp, $sp, " + (paramsOffset + 8 + 4)); //+4 for caller pararm
+        out.println("lw $fp, 0($sp)# restore $fp");
+        out.println("jr $ra");
+        out.println();
     }
 
     // Exp e;
@@ -155,11 +190,16 @@ public class CodeGenVisitor extends DepthFirstVisitor {
         n.e.accept(this);
         Variable var = null;
         if (null != (var = currMethod.getVar(n.i.s))) {
-            out.println("sw $a0, " + var.offset * 4 + "($fp)");
+            out.println("sw $a0, " + (-var.offset * 4) + "($fp)     #save " + n.i.s);
         } else if (null != (var = currMethod.getParam(n.i.s))) {
-            out.println("sw $a0, " + var.offset * 4 + "($fp)");
+            out.println("sw $a0, " + var.offset * 4 + "($fp)    #save " + n.i.s);
         } else if (null != (var = currClass.getVar(n.i.s))) {
-            out.println("sw $a0, " + var.offset * 4 + "($fp)");
+            //todo
+//            out.println("sw $a0, " + var.offset * 4 + "($fp)");
+            //last param is the calling object
+            out.println("lw $t1, " + (currMethod.params.size() + 1) * 4 + "($fp)    #load caller object");
+            out.println("sw $a0, " + var.offset * 4 + "($t1)        #load " + n.i.s);
+
         }
     }
 
@@ -184,11 +224,16 @@ public class CodeGenVisitor extends DepthFirstVisitor {
 //        n.i.accept(this);
         Variable var;
         if (null != (var = currMethod.getVar(n.i.s))) {
-            out.println("lw $a0, " + var.offset * 4 + "($fp)");
+            out.println("lw $a0, " + (-var.offset * 4) + "($fp)   #load array address " + n.i.s + "[]");
         } else if (null != (var = currMethod.getParam(n.i.s))) {
-            out.println("lw $a0, " + var.offset * 4 + "($fp)");
+            out.println("lw $a0, " + var.offset * 4 + "($fp)  #load array address " + n.i.s + "[]");
         } else if (null != (var = currClass.getVar(n.i.s))) {
-            out.println("lw $a0, " + var.offset * 4 + "($fp)");
+            //todo
+//            out.println("lw $a0, " + var.offset * 4 + "($fp)");
+            //last param is the calling object
+            out.println("lw $a0, " + (currMethod.params.size() + 1) * 4 + "($fp)  #load caller object");
+            out.println("lw $a0, " + var.offset * 4 + "($a0)        #load " + n.i.s);
+
         }
         out.println("beq $a0, $0, _null_pointer_exception");
 
@@ -205,7 +250,7 @@ public class CodeGenVisitor extends DepthFirstVisitor {
 
         out.println(
                 "add $a0, $t1, $a0\t  # $a0 = $a0 + stack top\n" +
-                "addiu $sp, $sp, 4\t  # pop"
+                        "addiu $sp, $sp, 4\t  # pop"
         );
 //        out.println("move $s0, $a0");
         out.println("sw $a0, 0($sp)\t  # push value of e1 to stack\n" +
@@ -341,6 +386,32 @@ public class CodeGenVisitor extends DepthFirstVisitor {
     // ExpList el;
     // cgen: e.i(el)
     public void visit(Call n) {
+
+        out.println("sw $fp, 0($sp)		# push $fp");
+        out.println("addiu $sp, $sp, -4");
+
+        //reverse order , last param is the caller, so push first
+        n.e.accept(this);
+        out.println("sw $a0, 0 ($sp)		#push caller param");
+        out.println("addiu $sp, $sp, -4");
+
+
+        //reverse order
+        for (int i = n.el.size() - 1; i >= 0; i--) {
+            n.el.elementAt(i).accept(this);
+            out.println("sw $a0, 0 ($sp)		#push param");
+            out.println("addiu $sp, $sp, -4");
+        }
+
+        String mname = n.i.toString();
+        TypeCheckVisitor.symbolTable = symbolTable;
+        TypeCheckVisitor.currClass = currClass;
+        TypeCheckVisitor.currMethod = currMethod;
+        String cname = ((IdentifierType) n.e.accept(new TypeCheckExpVisitor())).s;
+        Method calledMethod = symbolTable.getMethod(mname, cname);
+
+        out.println("jal " + cname + "__" + calledMethod.id + "");
+
     }
 
     // Exp e;
@@ -355,6 +426,23 @@ public class CodeGenVisitor extends DepthFirstVisitor {
     // Identifier i;
     // cgen: new n
     public void visit(NewObject n) {
+
+        Class createdClass = symbolTable.getClass(n.i.s);
+
+        int classSize = createdClass.fields.size();
+        out.println("li $a0, " + (classSize + 3));
+        out.println("");
+        out.println("sll $a0, $a0, 2   # multiple by 4 bytes");
+        out.println("li $v0, 9         # allocate space");
+        out.println("syscall");
+        SortedMap<String, Class> sortedMap = new TreeMap<>(symbolTable.hashtable);
+        int classIndex = Arrays.binarySearch(sortedMap.keySet().toArray(), n.i.s);
+        out.println("li $t1, " + classIndex);
+        out.println("sw $t1, 0($v0)");
+        out.println("li $t1, " + (classSize + 3));
+        out.println("sw $t1, 4($v0)");
+        out.println("move $a0, $v0");
+
     }
 
     // Exp e;
@@ -395,11 +483,16 @@ public class CodeGenVisitor extends DepthFirstVisitor {
     public void visit(IdentifierExp n) {
         Variable var;
         if (null != (var = currMethod.getVar(n.s))) {
-            out.println("lw $a0, " + var.offset * 4 + "($fp)");
+            out.println("lw $a0, " + (-var.offset * 4) + "($fp)     #load " + n.s);
         } else if (null != (var = currMethod.getParam(n.s))) {
-            out.println("lw $a0, " + var.offset * 4 + "($fp)");
+            out.println("lw $a0, " + var.offset * 4 + "($fp)        #load " + n.s);
         } else if (null != (var = currClass.getVar(n.s))) {
-            out.println("lw $a0, " + var.offset * 4 + "($fp)");
+            //todo
+            //last param is the calling object
+            out.println("lw $a0, " + (currMethod.params.size() + 1) * 4 + "($fp)  #load caller object");
+            out.println("lw $a0, " + var.offset * 4 + "($a0)        #save " + n.s);
+
+
         }
     }
 

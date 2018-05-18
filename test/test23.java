@@ -2,12 +2,12 @@
 //   Class and method
 class test23 {
     public static void main(String[] _str){
-      Foo f;
+      Foo3 f;
       int a;
       int [] A;
       {
         A = new int [10];
-        f = new Foo();
+        f = new Foo3();
         a = 5;
         a = f.m1(1,a,a+a,true,A);
         System.out.println(a);
@@ -16,7 +16,7 @@ class test23 {
     }
 }
 
-class Foo {
+class Foo3 {
   public int m1(int a, int b, int c, boolean bar, int [] A) {
     System.out.println(a);
     System.out.println(b);

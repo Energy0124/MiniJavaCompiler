@@ -6,206 +6,232 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 .text
 
 move $fp, $sp
-addiu $sp, $sp, 0
+addiu $sp, $sp, -4
+addiu $sp, $sp, -12
 
+li $a0, 3
+
+sll $a0, $a0, 2   # multiple by 4 bytes
+li $v0, 9         # allocate space
+syscall
+li $t1, 0
+sw $t1, 0($v0)
+li $t1, 3
+sw $t1, 4($v0)
+move $a0, $v0
+sw $a0, -4($fp)     #save foo
 li $a0, 10
+jal _alloc_int_array
+move $a0, $v0
+sw $a0, -8($fp)     #save B
+li $a0, 0
+sw $a0, -12($fp)     #save i
+while_start_0:
+lw $a0, -12($fp)     #load i
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-li $a0, 12
+lw $a0, -8($fp)     #load B
+beq $a0, $0, _null_pointer_exception
+lw $a0, 0($a0)
+lw $t1, 4($sp)	  # $t1 = stack top
+slt $a0, $t1, $a0	  # $a0 = $a0 + stack top
+addiu $sp, $sp, 4	  # pop
+
+beq $a0, $0, while_end_1
+
+#start ArrayAssign
+#start ArrayAssign e1
+lw $a0, -12($fp)     #load i
+sll $a0, $a0, 2
+sw $a0, 0($sp)	  # push value of e1 to stack
+addiu $sp, $sp, -4
+#end ArrayAssign e1
+#start ArrayAssign i
+lw $a0, -8($fp)   #load array address B[]
+beq $a0, $0, _null_pointer_exception
+lw $t2, 0($a0)
+sll $t2, $t2, 2
+addiu $a0, $a0, 4
+lw $t1, 4($sp)	  # $t1 = stack top
+
+bge $t1, $t2, _array_index_out_of_bound_exception
+add $a0, $t1, $a0	  # $a0 = $a0 + stack top
+addiu $sp, $sp, 4	  # pop
+sw $a0, 0($sp)	  # push value of e1 to stack
+addiu $sp, $sp, -4
+#end ArrayAssign i
+#start ArrayAssign e2
+lw $a0, -12($fp)     #load i
+sw $a0, 0($sp)	  # push value of e1 to stack
+addiu $sp, $sp, -4
+li $a0, 1
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-jal _print_int        # system call code for print_int 
-
-li $a0, 11
+lw $t1, 4($sp)	  # $t1 = stack top
+addiu $sp, $sp, 4	  # pop
+sw $a0, 0($t1)
+#end ArrayAssign e2
+#end ArrayAssign
+lw $a0, -12($fp)     #load i
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-li $a0, 12
+li $a0, 1
 lw $t1, 4($sp)	  # $t1 = stack top
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
 
-jal _print_int        # system call code for print_int 
+sw $a0, -12($fp)     #save i
 
-li $a0, 12
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 14
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
+b while_start_0
 
-jal _print_int        # system call code for print_int 
+while_end_1:
 
 li $a0, 1
+sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-li $a0, 2
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, 0($sp)	  # push value of e1 to stack
+sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
-li $a0, 3
+lw $a0, -4($fp)     #load foo
+sw $a0, 0 ($sp)		#push caller param
+addiu $sp, $sp, -4
+lw $a0, -8($fp)     #load B
+sw $a0, 0 ($sp)		#push param
+addiu $sp, $sp, -4
+jal Foo7__bar
+beq $a0, $0, _null_pointer_exception
+lw $t2, 0($a0)
+sll $t2, $t2, 2
+addiu $a0, $a0, 4
 lw $t1, 4($sp)	  # $t1 = stack top
+
+bge $t1, $t2, _array_index_out_of_bound_exception
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
-
+lw $a0, 0($a0)
 jal _print_int        # system call code for print_int 
 
-li $a0, 1
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 2
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 3
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
 li $a0, 4
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-jal _print_int        # system call code for print_int 
-
-li $a0, 1
+sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-li $a0, 2
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, 0($sp)	  # push value of e1 to stack
+sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
-li $a0, 3
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, 0($sp)	  # push value of e1 to stack
+lw $a0, -4($fp)     #load foo
+sw $a0, 0 ($sp)		#push caller param
 addiu $sp, $sp, -4
-li $a0, 4
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, 0($sp)	  # push value of e1 to stack
+lw $a0, -8($fp)     #load B
+sw $a0, 0 ($sp)		#push param
 addiu $sp, $sp, -4
-li $a0, 5
+jal Foo7__bar
+beq $a0, $0, _null_pointer_exception
+lw $t2, 0($a0)
+sll $t2, $t2, 2
+addiu $a0, $a0, 4
 lw $t1, 4($sp)	  # $t1 = stack top
+
+bge $t1, $t2, _array_index_out_of_bound_exception
 add $a0, $t1, $a0	  # $a0 = $a0 + stack top
 addiu $sp, $sp, 4	  # pop
-
-jal _print_int        # system call code for print_int 
-
-li $a0, 1
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 2
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 3
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 4
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 5
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-jal _print_int        # system call code for print_int 
-
-li $a0, 1
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 2
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 3
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 4
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 5
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-jal _print_int        # system call code for print_int 
-
-li $a0, 1
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 2
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 3
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 4
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 5
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
+lw $a0, 0($a0)
 jal _print_int        # system call code for print_int 
 
 # exit
 li $v0, 10
 syscall
+
+Foo7__bar:
+move $fp, $sp
+sw $ra, 0($sp) # push $ra
+addiu $sp, $sp, -4
+addiu $sp, $sp, -4
+li $a0, 0
+sw $a0, -4($fp)     #save i
+while_start_2:
+lw $a0, -4($fp)     #load i
+sw $a0, 0($sp)	  # push value of e1 to stack
+addiu $sp, $sp, -4
+lw $a0, 4($fp)        #load A
+beq $a0, $0, _null_pointer_exception
+lw $a0, 0($a0)
+lw $t1, 4($sp)	  # $t1 = stack top
+slt $a0, $t1, $a0	  # $a0 = $a0 + stack top
+addiu $sp, $sp, 4	  # pop
+
+beq $a0, $0, while_end_3
+
+#start ArrayAssign
+#start ArrayAssign e1
+lw $a0, -4($fp)     #load i
+sll $a0, $a0, 2
+sw $a0, 0($sp)	  # push value of e1 to stack
+addiu $sp, $sp, -4
+#end ArrayAssign e1
+#start ArrayAssign i
+lw $a0, 4($fp)  #load array address A[]
+beq $a0, $0, _null_pointer_exception
+lw $t2, 0($a0)
+sll $t2, $t2, 2
+addiu $a0, $a0, 4
+lw $t1, 4($sp)	  # $t1 = stack top
+
+bge $t1, $t2, _array_index_out_of_bound_exception
+add $a0, $t1, $a0	  # $a0 = $a0 + stack top
+addiu $sp, $sp, 4	  # pop
+sw $a0, 0($sp)	  # push value of e1 to stack
+addiu $sp, $sp, -4
+#end ArrayAssign i
+#start ArrayAssign e2
+lw $a0, -4($fp)     #load i
+sll $a0, $a0, 2
+sw $a0, 0($sp)	  # push value of e1 to stack
+addiu $sp, $sp, -4
+lw $a0, 4($fp)        #load A
+beq $a0, $0, _null_pointer_exception
+lw $t2, 0($a0)
+sll $t2, $t2, 2
+addiu $a0, $a0, 4
+lw $t1, 4($sp)	  # $t1 = stack top
+
+bge $t1, $t2, _array_index_out_of_bound_exception
+add $a0, $t1, $a0	  # $a0 = $a0 + stack top
+addiu $sp, $sp, 4	  # pop
+lw $a0, 0($a0)
+sw $a0, 0($sp)	  # push value of e1 to stack
+addiu $sp, $sp, -4
+li $a0, 2
+lw $t1, 4($sp)	  # $t1 = stack top
+mult $t1, $a0	  # $a0 = $a0 + stack top
+mflo $a0 	  # Moves the value from the LO part of the result register into $a0.
+addiu $sp, $sp, 4	  # pop
+
+lw $t1, 4($sp)	  # $t1 = stack top
+addiu $sp, $sp, 4	  # pop
+sw $a0, 0($t1)
+#end ArrayAssign e2
+#end ArrayAssign
+lw $a0, -4($fp)     #load i
+sw $a0, 0($sp)	  # push value of e1 to stack
+addiu $sp, $sp, -4
+li $a0, 1
+lw $t1, 4($sp)	  # $t1 = stack top
+add $a0, $t1, $a0	  # $a0 = $a0 + stack top
+addiu $sp, $sp, 4	  # pop
+
+sw $a0, -4($fp)     #save i
+
+b while_start_2
+
+while_end_3:
+
+lw $a0, 4($fp)        #load A
+addiu $sp, $sp, 4
+lw $ra, 4($sp) # restore $ra
+addiu $sp, $sp, 16
+lw $fp, 0($sp)# restore $fp
+jr $ra
 
 _print_int: # System.out.println(int)
 li $v0, 1

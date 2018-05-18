@@ -2,10 +2,10 @@
 //   Class and method
 class test24 {
     public static void main(String[] a){
-      Foo f;
+      Foo4 f;
       int b;
       {
-        f = new Foo();
+        f = new Foo4();
         b = 5;
         b = f.m1(f.m2(1), f.m2(100));
         System.out.println(b);
@@ -13,7 +13,7 @@ class test24 {
     }
 }
 
-class Foo {
+class Foo4 {
   public int m1(int a, int b) {
     return a + b;
   }

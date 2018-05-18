@@ -2,12 +2,12 @@
 //  Multiple classes with fields
 class test26 {
   public static void main(String[] args) {
-    Foo foo;
-    Bar bar;
+    Foo6 foo;
+    Bar6 bar;
     int dummy;
     {
-      foo = new Foo();
-      bar = new Bar();
+      foo = new Foo6();
+      bar = new Bar6();
 
       dummy = foo.init(1000, 2000);
       dummy = foo.f();
@@ -21,7 +21,7 @@ class test26 {
   }
 }
 
-class Foo {
+class Foo6 {
   int x;
   int y;
 
@@ -46,23 +46,23 @@ class Foo {
 
 }
 
-class Bar {
-  Foo foo;
- 
-  public int setFoo(Foo _foo) {
+class Bar6 {
+  Foo6 foo;
+
+  public int setFoo(Foo6 _foo) {
     foo = _foo;
     return 0;
   }
 
   public int f() {
     int dummy;
-    dummy = foo.f(); 
+    dummy = foo.f();
     return foo.getX();
   }
 
   public int g() {
     int dummy;
-    dummy = foo.g(); 
+    dummy = foo.g();
     return foo.getY();
   }
 }

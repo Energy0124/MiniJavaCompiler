@@ -6,17 +6,18 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 .text
 
 move $fp, $sp
-addiu $sp, $sp, -8
+addiu $sp, $sp, -4
+addiu $sp, $sp, -4
 
 li $a0, 10
 jal _alloc_int_array
 move $a0, $v0
-sw $a0, 8($fp)
+sw $a0, -4($fp)     #save A
 li $a0, 0
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -33,7 +34,7 @@ li $a0, 1
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -50,7 +51,7 @@ li $a0, 2
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -67,7 +68,7 @@ li $a0, 3
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -84,7 +85,7 @@ li $a0, 4
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -101,7 +102,7 @@ li $a0, 5
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -118,7 +119,7 @@ li $a0, 6
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -135,7 +136,7 @@ li $a0, 7
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -152,7 +153,7 @@ li $a0, 8
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -169,7 +170,7 @@ li $a0, 9
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2
@@ -182,7 +183,7 @@ addiu $sp, $sp, 4	  # pop
 lw $a0, 0($a0)
 jal _print_int        # system call code for print_int 
 
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $a0, 0($a0)
 jal _print_int        # system call code for print_int 
@@ -191,7 +192,7 @@ li $a0, 10
 sll $a0, $a0, 2
 sw $a0, 0($sp)	  # push value of e1 to stack
 addiu $sp, $sp, -4
-lw $a0, 8($fp)
+lw $a0, -4($fp)     #load A
 beq $a0, $0, _null_pointer_exception
 lw $t2, 0($a0)
 sll $t2, $t2, 2

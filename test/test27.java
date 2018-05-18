@@ -3,16 +3,16 @@
 //   Returning an array from a method
 class test27 {
   public static void main(String[] args) {
-    Foo foo;
+    Foo7 foo;
     int [] B;
     int i;
     {
-      foo = new Foo();
+      foo = new Foo7();
       B = new int [10];
       i = 0;
       while (i < B.length) {
         B[i] = i+1;
-        i = i + 1; 
+        i = i + 1;
       }
 
       System.out.println(foo.bar(B)[1]);
@@ -21,7 +21,7 @@ class test27 {
   }
 }
 
-class Foo {
+class Foo7 {
 
   public int [] bar(int [] A) {
     int i;

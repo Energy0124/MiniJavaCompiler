@@ -8,7 +8,7 @@ import java.util.Vector;
 
 // The global Symbol Table that maps class name to Class
 class SymbolTable {
-    private Hashtable<String, Class> hashtable;
+    public Hashtable<String, Class> hashtable;
 
     public SymbolTable() {
         hashtable = new Hashtable<String, Class>();
@@ -156,6 +156,7 @@ class Class {
     Hashtable<String, Variable> fields;
     String parent;  // Superclass's name  (null if there is no superclass)
     Type type;      // An instance of Type that represents this class
+    int fieldOffset = 3;
 
     // Model a class named "id" that extend a class name "p"
     // "p" is null if class "id" does has extend any class
@@ -212,7 +213,7 @@ class Class {
         if (fields.containsKey(id))
             return false;
         else {
-            fields.put(id, new Variable(id, type));
+            fields.put(id, new Variable(id, type, fieldOffset++));
             return true;
         }
     }
@@ -272,7 +273,8 @@ class Method {
     Type type;  // Return type
     Vector<Variable> params;          // Formal parameters
     Hashtable<String, Variable> vars; // Local variables
-    int offset = 1;
+    int paramsOffset = 1;
+    int localOffset = 1;
 
     public Method(String id, Type type) {
         this.id = id;
@@ -295,7 +297,7 @@ class Method {
         if (containsParam(id))
             return false;
         else {
-            params.addElement(new Variable(id, type, offset++));
+            params.addElement(new Variable(id, type, paramsOffset++));
             return true;
         }
     }
@@ -318,7 +320,7 @@ class Method {
         if (vars.containsKey(id))
             return false;
         else {
-            vars.put(id, new Variable(id, type, offset++));
+            vars.put(id, new Variable(id, type, localOffset++));
             return true;
         }
     }

@@ -7,15 +7,72 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 
 move $fp, $sp
 addiu $sp, $sp, -4
+addiu $sp, $sp, -12
 
-li $a0, 1
-sw $a0, -4($fp)     #save x
-lw $a0, -4($fp)     #load x
+li $a0, 3
+
+sll $a0, $a0, 2   # multiple by 4 bytes
+li $v0, 9         # allocate space
+syscall
+li $t1, 0
+sw $t1, 0($v0)
+li $t1, 3
+sw $t1, 4($v0)
+move $a0, $v0
+sw $a0, -4($fp)     #save f
+sw $fp, 0($sp)		# push $fp
+addiu $sp, $sp, -4
+lw $a0, -4($fp)     #load f
+jal Foo2__m1
+sw $a0, -8($fp)     #save a
+sw $fp, 0($sp)		# push $fp
+addiu $sp, $sp, -4
+lw $a0, -4($fp)     #load f
+jal Foo2__m2
+sw $a0, -12($fp)     #save b
+lw $a0, -8($fp)     #load a
+jal _print_int        # system call code for print_int 
+
+lw $a0, -12($fp)     #load b
 jal _print_int        # system call code for print_int 
 
 # exit
 li $v0, 10
 syscall
+
+Foo2__m1:
+move $fp, $sp
+sw $ra, 0($sp) # push $ra
+addiu $sp, $sp, -4
+addiu $sp, $sp, -4
+li $a0, 123
+jal _print_int        # system call code for print_int 
+
+sw $fp, 0($sp)		# push $fp
+addiu $sp, $sp, -4
+jal Foo2__m2
+sw $a0, -4($fp)     #save a
+lw $a0, -4($fp)     #load a
+addiu $sp, $sp, 4
+lw $ra, 4($sp) # restore $ra
+addiu $sp, $sp, 8
+lw $fp, 0($sp)# restore $fp
+jr $ra
+
+Foo2__m2:
+move $fp, $sp
+sw $ra, 0($sp) # push $ra
+addiu $sp, $sp, -4
+addiu $sp, $sp, 0
+li $a0, 456
+jal _print_int        # system call code for print_int 
+
+li $a0, 1
+addiu $sp, $sp, 0
+lw $ra, 4($sp) # restore $ra
+addiu $sp, $sp, 8
+lw $fp, 0($sp)# restore $fp
+jr $ra
 
 _print_int: # System.out.println(int)
 li $v0, 1

@@ -8,39 +8,36 @@ msg_null_pointer_exception: .asciiz "Null pointer exception\n"
 move $fp, $sp
 addiu $sp, $sp, -4
 
-li $a0, 1
-sw $a0, -4($fp)     #save x
-while_start_0:
-lw $a0, -4($fp)     #load x
-sw $a0, 0($sp)	  # push value of e1 to stack
+sw $fp, 0($sp)		# push $fp
 addiu $sp, $sp, -4
-li $a0, 10
-lw $t1, 4($sp)	  # $t1 = stack top
-slt $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
+li $a0, 3
 
-beq $a0, $0, while_end_1
-
-lw $a0, -4($fp)     #load x
+sll $a0, $a0, 2   # multiple by 4 bytes
+li $v0, 9         # allocate space
+syscall
+li $t1, 0
+sw $t1, 0($v0)
+li $t1, 3
+sw $t1, 4($v0)
+move $a0, $v0
+jal Foo__f
 jal _print_int        # system call code for print_int 
-
-lw $a0, -4($fp)     #load x
-sw $a0, 0($sp)	  # push value of e1 to stack
-addiu $sp, $sp, -4
-li $a0, 1
-lw $t1, 4($sp)	  # $t1 = stack top
-add $a0, $t1, $a0	  # $a0 = $a0 + stack top
-addiu $sp, $sp, 4	  # pop
-
-sw $a0, -4($fp)     #save x
-
-b while_start_0
-
-while_end_1:
 
 # exit
 li $v0, 10
 syscall
+
+Foo__f:
+move $fp, $sp
+sw $ra, 0($sp) # push $ra
+addiu $sp, $sp, -4
+addiu $sp, $sp, 0
+li $a0, 999
+addiu $sp, $sp, 0
+lw $ra, 4($sp) # restore $ra
+addiu $sp, $sp, 8
+lw $fp, 0($sp)# restore $fp
+jr $ra
 
 _print_int: # System.out.println(int)
 li $v0, 1
